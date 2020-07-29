@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Serial node</title>
+    <script type="text/javascript">
+        let hex = ascii2hex('G01') // or one of the other ascii values
+        let checksum = chk8xor(hex)
+        console.log("### result => "+ checksum)
+
+        function ascii2hex(str) {
+          var arr = [];
+          for (var i = 0, l = str.length; i < l; i ++) {
+            var hex = Number(str.charCodeAt(i)).toString(16);
+            arr.push(hex);
+          }
+          console.log("### HEX =>"+arr)
+          return arr;
+        }
+
+        function chk8xor(byteArray) {
+          let checksum = 0x00;
+          for(let i = 0; i < byteArray.length ; i++){
+            checksum ^= (byteArray[i]) ;
+            console.log("### byteArray("+i+")=>>["+ byteArray[i] +"]");
+            //console.log("### ~byteArray("+i+")=>>["+ ~byteArray[i] +"]");
+            //console.log("### byteArray("+i+") & 0xFF=>>["+ (byteArray[i] & 0xff) +"]");
+            console.log("### checksum=>>["+ checksum +"]");
+          }
+          //checksum = ~checksum;
+          console.log("### checksum & 0xff=>>["+ (checksum & 0xff ) +"]");
+          return checksum&0xFF;
+        }
+    </script>
+  </head>
+  <body>
+    <form action = "/serial" method = "post">
+      <input type = "text" name = "send">
+      <input type = "submit" value = "send">
+    </form>
+  </body>
+</html>
